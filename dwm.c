@@ -216,6 +216,7 @@ static void setgaps(const Arg *arg);
 static void setlayout(const Arg *arg);
 static void setmfact(const Arg *arg);
 static void setup(void);
+static void runstartupcmds(void);
 static void seturgent(Client *c, int urg);
 static void showhide(Client *c);
 static void spawn(const Arg *arg);
@@ -1715,7 +1716,19 @@ setup(void)
 	XChangeWindowAttributes(dpy, root, CWEventMask|CWCursor, &wa);
 	XSelectInput(dpy, root, wa.event_mask);
 	grabkeys();
+        // Run my custom startup commands
+        runstartupcmds();
 	focus(NULL);
+}
+
+void
+runstartupcmds(void)
+{
+        for (int i = 0; i < LENGTH(startupcmds); ++i) {
+                const char **cmd = startupcmds[i];
+                Arg arg = { .v = cmd };
+                spawn(&arg);
+        }
 }
 
 void
@@ -1842,8 +1855,10 @@ togglefloating(const Arg *arg)
 void
 togglefullscr(const Arg *arg)
 {
-        if(selmon->sel)
+        if(selmon->sel) {
                 setfullscreen(selmon->sel, !selmon->sel->isfullscreen);
+                togglebar(arg);
+        }
 }
 
 void
@@ -1960,8 +1975,8 @@ updatebars(void)
 	for (m = mons; m; m = m->next) {
 		if (m->barwin)
 			continue;
-                m->barwin = XCreateWindow(dpy, root, m->wx, m->by, m->ww, bh, 0, depth,
-				InputOutput, visual,
+                m->barwin = XCreateWindow(dpy, root, m->wx + sp, m->by + vp, m->ww - 2 * sp, bh, 0, depth,
+                                InputOutput, visual,
 				CWOverrideRedirect|CWBackPixel|CWBorderPixel|CWColormap|CWEventMask, &wa);
 		XDefineCursor(dpy, m->barwin, cursor[CurNormal]->cursor);
 		XMapRaised(dpy, m->barwin);

@@ -4,10 +4,10 @@
 #include <X11/XF86keysym.h>
 #endif
 
-#define MAINFONT "RobotoMono"
+#define MAINFONT "RobotoMono Nerd Font"
 #define ICONFONT "Font Awesome 6 Free"
 
-#define GAP 6
+#define GAP 8
 #define TERM "urxvt"
 #define BROWSER "firefox"
 #define BG_IMG_PATH "/usr/share/pixmaps/default-background.jpg"
@@ -25,20 +25,22 @@ static const int sidepad            = GAP;      /* horizontal padding of bar */
 // Inside padding (statuspadding patch)
 static const int horizpadbar        = GAP * 1.5;/* horizontal padding for statusbar */
 static const int vertpadbar         = GAP * 1.5;/* vertical padding for statusbar */
-static const char *fonts[]          = { MAINFONT":size=14:style=Bold", ICONFONT":size=14" };
-static const char dmenufont[]       =  MAINFONT"size=14:style=Bold";
+static const char *fonts[]          = { MAINFONT":size=12:style=Regular", ICONFONT":size=10" };
+static const char dmenufont[]       =  MAINFONT"size=12:style=Regular";
+static const char col_black[]       = "#000000";
+static const char col_white[]       = "#ffffff";
 static const char col_gray1[]       = "#222222";
 static const char col_gray2[]       = "#444444";
 static const char col_gray3[]       = "#bbbbbb";
 static const char col_gray4[]       = "#eeeeee";
 static const char col_cyan[]        = "#24d8d2";
-static const unsigned int baralpha = 0xd0;
+static const unsigned int baralpha = 0x80;
 static const unsigned int borderalpha = OPAQUE;
 
 static const char *colors[][3]      = {
 	/*               fg         bg         border   */
 	[SchemeNorm] = { col_gray3, col_gray1, col_gray2 }, // For inactive windows
-	[SchemeSel]  = { col_gray4, col_cyan,  col_cyan  }, // For active windows
+	[SchemeSel]  = { col_gray4, col_gray2, col_cyan  }, // For active windows
 };
 
 static const unsigned int alphas[][3]      = {
@@ -48,7 +50,7 @@ static const unsigned int alphas[][3]      = {
 };
 
 /* tagging */
-static const char *tags[] = { "", "", "", "?", "", "" };
+static const char *tags[] = { " 󰈹 ", "  ", "  ", " ? ", "  ", "  " };
 
 static const Rule rules[] = {
 	/* xprop(1):
@@ -56,9 +58,9 @@ static const Rule rules[] = {
 	 *	WM_NAME(STRING) = title
 	 */
 	/* class     instance  title           tags mask  isfloating  isterminal  noswallow  monitor */
-	{ "Gimp",    NULL,     NULL,           0,         1,          0,           0,        -1 },
-	{ "Firefox", NULL,     NULL,           0,         0,          0,          -1,        -1 },
-	{ "URxvt",   NULL,     NULL,           0,         0,          1,           0,        -1 },
+	{ "Gimp",    NULL,     NULL,           0,         0,          0,           0,        -1 },
+	{ "Firefox", NULL,     NULL,           0,         0,          0,           1,        -1 },
+	{ "URxvt",   NULL,     NULL,           1 << 2,    0,          1,           0,        -1 },
 	{ NULL,      NULL,     "Event Tester", 0,         0,          0,           1,        -1 }, /* xev */
 };
 
@@ -71,9 +73,9 @@ static const int lockfullscreen = 1; /* 1 will force focus on the fullscreen win
 // First layout is the default layout
 static const Layout layouts[] = {
 	/* symbol     arrange function */
-	{ " ",      tile },      // https://fontawesome.com/icons/grip-lines-vertical?f=classic&s=solid
-	{ " ",      NULL },      // https://fontawesome.com/icons/square?f=classic&s=regular
-	{ " ",      monocle },   // https://fontawesome.com/icons/magnifying-glass?f=classic&s=solid
+	{ "󱑝",      tile },
+	{ "",      NULL },
+	{ "",      monocle },
 };
 
 /* key definitions */
@@ -89,7 +91,7 @@ static const Layout layouts[] = {
 
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
-static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, NULL };
+static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_gray2, "-sf", col_gray4, NULL };
 static const char *termcmd[]  = { TERM, NULL };
 
 /* Custom commands */
@@ -104,6 +106,16 @@ static const char *volmutecmd[] = { "pactl", "set-sink-mute", "@DEFAULT_SINK@", 
 /* Custom commands to run on startup */
 static const char *xsslockcmd[] = { "xss-lock", "--transfer-sleep-lock", "--", "i3lock", "--nofork", NULL };
 static const char *setbgcmd[] = { "feh", "--bg-max", BG_IMG_PATH, NULL };
+static const char *picomcmd[] = { "picom", NULL };
+static const char **startupcmds[] = {
+      xsslockcmd,
+      setbgcmd,
+      picomcmd,
+
+      // Start terminal and browser on startup
+      termcmd,
+      browsercmd,
+};
 
 /* Brightness keys and commands */
 #ifdef LAPTOP_BUILD
