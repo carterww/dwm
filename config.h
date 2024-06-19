@@ -25,7 +25,7 @@ static const int sidepad            = GAP;      /* horizontal padding of bar */
 // Inside padding (statuspadding patch)
 static const int horizpadbar        = GAP * 1.5;/* horizontal padding for statusbar */
 static const int vertpadbar         = GAP * 1.5;/* vertical padding for statusbar */
-static const char *fonts[]          = { MAINFONT":size=12:style=Regular", ICONFONT":size=10" };
+static const char *fonts[]          = { MAINFONT":size=12:style=Regular", ICONFONT":size=12" };
 static const char dmenufont[]       =  MAINFONT"size=12:style=Regular";
 static const char col_black[]       = "#000000";
 static const char col_white[]       = "#ffffff";
@@ -50,7 +50,7 @@ static const unsigned int alphas[][3]      = {
 };
 
 /* tagging */
-static const char *tags[] = { " 󰈹 ", "  ", "  ", " ? ", "  ", "  " };
+static const char *tags[] = { "󰈹", "󰙯", "", "?", "", "" };
 
 static const Rule rules[] = {
 	/* xprop(1):
