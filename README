@@ -46,3 +46,13 @@ Configuration
 -------------
 The configuration of dwm is done by creating a custom config.h
 and (re)compiling the source code.
+
+Applied Patches
+---------------
+- cursorwarp (https://dwm.suckless.org/patches/cursorwarp/dwm-cursorwarp-6.3.diff)
+- actualfullscreen (https://dwm.suckless.org/patches/actualfullscreen/dwm-actualfullscreen-20211013-cb3f58a.diff)
+- fullgaps (https://dwm.suckless.org/patches/fullgaps/dwm-fullgaps-6.4.diff)
+- swallow (https://dwm.suckless.org/patches/swallow/dwm-swallow-6.3.diff)
+- barpadding (https://dwm.suckless.org/patches/barpadding/dwm-barpadding-6.2.diff)
+- statuspadding (https://dwm.suckless.org/patches/statuspadding/dwm-statuspadding-6.3.diff)
+- alpah (https://dwm.suckless.org/patches/alpha/dwm-alpha-20230401-348f655.diff)
