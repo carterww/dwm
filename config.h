@@ -34,13 +34,14 @@ static const char col_gray2[]       = "#444444";
 static const char col_gray3[]       = "#bbbbbb";
 static const char col_gray4[]       = "#eeeeee";
 static const char col_cyan[]        = "#24d8d2";
-static const unsigned int baralpha = 0x80;
+static const unsigned int baralpha = 0x90;
 static const unsigned int borderalpha = OPAQUE;
 
 static const char *colors[][3]      = {
-	/*               fg         bg         border   */
-	[SchemeNorm] = { col_gray3, col_gray1, col_gray2 }, // For inactive windows
-	[SchemeSel]  = { col_gray4, col_gray2, col_cyan  }, // For active windows
+	/*                 fg         bg         border   */
+	[SchemeNorm]   = { col_gray3, col_gray1, col_gray2 }, // For inactive windows
+	[SchemeSel]    = { col_gray4, col_gray2, col_cyan  }, // For active windows
+        [SchemeStatus] = { col_gray3, col_gray1, "#000000" }, // Statusbar right
 };
 
 static const unsigned int alphas[][3]      = {
