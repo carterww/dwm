@@ -107,7 +107,9 @@ static const char *volmutecmd[] = { "pactl", "set-sink-mute", "@DEFAULT_SINK@", 
 static const char *xsslockcmd[] = { "xss-lock", "--transfer-sleep-lock", "--", "i3lock", "--nofork", NULL };
 static const char *setbgcmd[] = { "feh", "--bg-max", BG_IMG_PATH, NULL };
 static const char *picomcmd[] = { "picom", NULL };
+static const char *slstatuscmd[] = { "slstatus", NULL };
 static const char **startupcmds[] = {
+      slstatuscmd,
       xsslockcmd,
       setbgcmd,
       picomcmd,
