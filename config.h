@@ -25,8 +25,8 @@ static const int sidepad            = GAP;      /* horizontal padding of bar */
 // Inside padding (statuspadding patch)
 static const int horizpadbar        = GAP * 1.5;/* horizontal padding for statusbar */
 static const int vertpadbar         = GAP * 1.5;/* vertical padding for statusbar */
-static const char *fonts[]          = { MAINFONT":size=12:style=Regular", ICONFONT":size=12" };
-static const char dmenufont[]       =  MAINFONT"size=12:style=Regular";
+static const char *fonts[]          = { MAINFONT":size=13:style=Regular", ICONFONT":size=13" };
+static const char dmenufont[]       =  MAINFONT"size=13:style=Regular";
 static const char col_black[]       = "#000000";
 static const char col_white[]       = "#ffffff";
 static const char col_gray1[]       = "#222222";
@@ -34,14 +34,13 @@ static const char col_gray2[]       = "#444444";
 static const char col_gray3[]       = "#bbbbbb";
 static const char col_gray4[]       = "#eeeeee";
 static const char col_cyan[]        = "#24d8d2";
-static const unsigned int baralpha = 0x90;
+static const unsigned int baralpha = 0xb0;
 static const unsigned int borderalpha = OPAQUE;
 
 static const char *colors[][3]      = {
 	/*                 fg         bg         border   */
 	[SchemeNorm]   = { col_gray3, col_gray1, col_gray2 }, // For inactive windows
 	[SchemeSel]    = { col_gray4, col_gray2, col_cyan  }, // For active windows
-        [SchemeStatus] = { col_gray3, col_gray1, "#000000" }, // Statusbar right
 };
 
 static const unsigned int alphas[][3]      = {
