@@ -6,8 +6,9 @@
 
 #define MAINFONT "RobotoMono Nerd Font"
 #define ICONFONT "Font Awesome 6 Free"
+#define FONTSIZE "12"
 
-#define GAP 8
+#define GAP 6
 #define TERM "urxvt"
 #define BROWSER "firefox"
 #define BG_IMG_PATH "/usr/share/pixmaps/default-background.jpg"
@@ -25,8 +26,8 @@ static const int sidepad            = GAP;      /* horizontal padding of bar */
 // Inside padding (statuspadding patch)
 static const int horizpadbar        = GAP * 1.5;/* horizontal padding for statusbar */
 static const int vertpadbar         = GAP * 1.5;/* vertical padding for statusbar */
-static const char *fonts[]          = { MAINFONT":size=13:style=Regular", ICONFONT":size=13" };
-static const char dmenufont[]       =  MAINFONT"size=13:style=Regular";
+static const char *fonts[]          = { MAINFONT":size=" FONTSIZE ":style=Regular", ICONFONT":size=" FONTSIZE };
+static const char dmenufont[]       =  MAINFONT"size=" FONTSIZE ":style=Regular";
 static const char col_black[]       = "#000000";
 static const char col_white[]       = "#ffffff";
 static const char col_gray1[]       = "#222222";
