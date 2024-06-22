@@ -27,7 +27,7 @@ static const int sidepad            = GAP;      /* horizontal padding of bar */
 static const int horizpadbar        = GAP * 1.5;/* horizontal padding for statusbar */
 static const int vertpadbar         = GAP * 1.5;/* vertical padding for statusbar */
 static const char *fonts[]          = { MAINFONT":size=" FONTSIZE ":style=Regular", ICONFONT":size=" FONTSIZE };
-static const char dmenufont[]       =  MAINFONT"size=" FONTSIZE ":style=Regular";
+static const char dmenufont[]       =  MAINFONT":size=" FONTSIZE ":style=Regular";
 static const char col_black[]       = "#000000";
 static const char col_white[]       = "#ffffff";
 static const char col_gray1[]       = "#222222";
@@ -93,7 +93,8 @@ static char lockprg[] = "slock";
 
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
-static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_gray2, "-sf", col_gray4, NULL };
+static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-c", "-l", "15",
+        "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_black, NULL };
 static const char *termcmd[]  = { TERM, NULL };
 
 /* Custom commands */
