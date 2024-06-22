@@ -89,6 +89,7 @@ static const Layout layouts[] = {
 
 /* helper for spawning shell commands in the pre dwm-5.0 fashion */
 #define SHCMD(cmd) { .v = (const char*[]){ "/bin/sh", "-c", cmd, NULL } }
+static char lockprg[] = "slock";
 
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
@@ -97,7 +98,7 @@ static const char *termcmd[]  = { TERM, NULL };
 
 /* Custom commands */
 static const char *browsercmd[] = { BROWSER, NULL };
-static const char *lockcmd[] = { "i3lock", "-t", "-i", BG_IMG_PATH, NULL };
+static const char *lockcmd[] = { lockprg, NULL };
 static const char *pausecmd[] = { "playerctl", "play-pause", NULL };
 
 static const char *volupcmd[] = { "pactl", "set-sink-volume", "@DEFAULT_SINK@", "+5%", NULL };
@@ -105,7 +106,7 @@ static const char *voldowncmd[] = { "pactl", "set-sink-volume", "@DEFAULT_SINK@"
 static const char *volmutecmd[] = { "pactl", "set-sink-mute", "@DEFAULT_SINK@", "toggle", NULL };
 
 /* Custom commands to run on startup */
-static const char *xsslockcmd[] = { "xss-lock", "--transfer-sleep-lock", "--", "i3lock", "--nofork", NULL };
+static const char *xsslockcmd[] = { "xss-lock", "--transfer-sleep-lock", "--", lockprg, NULL };
 static const char *setbgcmd[] = { "feh", "--bg-max", BG_IMG_PATH, NULL };
 static const char *picomcmd[] = { "picom", NULL };
 static const char *slstatuscmd[] = { "slstatus", NULL };
