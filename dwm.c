@@ -1860,7 +1860,11 @@ togglefullscr(const Arg *arg)
 {
         if(selmon->sel) {
                 setfullscreen(selmon->sel, !selmon->sel->isfullscreen);
-                togglebar(arg);
+                if (selmon->sel->isfullscreen && selmon->showbar) {
+                  togglebar(arg);
+                } else if (!selmon->sel->isfullscreen && !selmon->showbar) {
+                  togglebar(arg);
+                }
         }
 }
 
