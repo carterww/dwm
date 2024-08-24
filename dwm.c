@@ -249,6 +249,8 @@ static int xerrordummy(Display *dpy, XErrorEvent *ee);
 static int xerrorstart(Display *dpy, XErrorEvent *ee);
 static void xinitvisual(void);
 static void zoom(const Arg *arg);
+static void volumechange(const Arg *arg);
+static void brightnesschange(const Arg *arg);
 
 static pid_t getparentprocess(pid_t p);
 static int isdescprocess(pid_t p, pid_t c);
@@ -1860,11 +1862,7 @@ togglefullscr(const Arg *arg)
 {
         if(selmon->sel) {
                 setfullscreen(selmon->sel, !selmon->sel->isfullscreen);
-                if (selmon->sel->isfullscreen && selmon->showbar) {
-                  togglebar(arg);
-                } else if (!selmon->sel->isfullscreen && !selmon->showbar) {
-                  togglebar(arg);
-                }
+                togglebar(arg);
         }
 }
 
@@ -2459,6 +2457,28 @@ zoom(const Arg *arg)
 	if (c == nexttiled(selmon->clients) && !(c = nexttiled(c->next)))
 		return;
 	pop(c);
+}
+
+
+static void volumechange(const Arg *arg)
+{
+        if (arg->i == 0) {
+                spawn(&(Arg) { .v = volmutecmd });
+        } else if (arg->i > 0) {
+                spawn(&(Arg) { .v = volupcmd });
+        } else {
+                spawn(&(Arg) { .v = voldowncmd });
+        }
+}
+
+static void brightnesschange(const Arg *arg)
+{
+        const char *amount = arg->i > 0 ? "+5" : "5-";
+        for (int i = 0; i < LENGTH(videodevs); ++i) {
+                briCmd[2] = videodevs[i];
+                briCmd[4] = amount;
+                spawn(&(Arg) { .v = briCmd });
+        }
 }
 
 int

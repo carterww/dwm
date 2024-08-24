@@ -108,7 +108,12 @@ static const char *volmutecmd[] = { "pactl", "set-sink-mute", "@DEFAULT_SINK@", 
 
 /* Custom commands to run on startup */
 static const char *xsslockcmd[] = { "xss-lock", "--transfer-sleep-lock", "--", lockprg, NULL };
+#ifdef LAPTOP_BUILD
+static const char *setbgcmd[] = { "feh", "--bg-fill", BG_IMG_PATH, NULL };
+#endif
+#ifndef LAPTOP_BUILD
 static const char *setbgcmd[] = { "feh", "--bg-max", BG_IMG_PATH, NULL };
+#endif
 static const char *picomcmd[] = { "picom", NULL };
 static const char *slstatuscmd[] = { "slstatus", NULL };
 static const char **startupcmds[] = {
@@ -124,17 +129,19 @@ static const char **startupcmds[] = {
 
 /* Brightness keys and commands */
 #ifdef LAPTOP_BUILD
-static cosnt KeySym briUp = XF86XK_MonBrightnessUp;
+static const KeySym briUp = XF86XK_MonBrightnessUp;
 static const KeySym briDown = XF86XK_MonBrightnessDown;
 
-// TODO: Check what I cmd i use on my laptop
-static const char *briUpCmd[] = { "xbacklight", "-inc", "5", NULL };
-static const char *briDownCmd[] = { "xbacklight", "-dec", "5", NULL };
+static const char *videodevs[] = {
+  "acpi_video0",
+  "acpi_video1",
+};
+static const char *briCmd[] = { "brightnessctl", "-d", "", "s", "", NULL };
 #endif
 
 /* Volume keys */
 #ifdef LAPTOP_BUILD
-static cosnt unsigned int volMod = 0; // No modifier
+static const unsigned int volMod = 0; // No modifier
 static const KeySym volUpKey = XF86XK_AudioRaiseVolume;
 static const KeySym volDownKey = XF86XK_AudioLowerVolume;
 static const KeySym volMuteKey = XF86XK_AudioMute;
@@ -193,14 +200,14 @@ static const Key keys[] = {
         { MODKEY,                       XK_p,      spawn,          {.v = pausecmd } },      // Pause/play media with MODKEY + p
 
         // Volume keys
-        { volMod,                       volUpKey,  spawn,          {.v = volupcmd } },      // Increase volume with volMod + volUpKey
-        { volMod,                       volDownKey,spawn,          {.v = voldowncmd } },    // Decrease volume with volMod + volDownKey
-        { volMod,                       volMuteKey,spawn,          {.v = volmutecmd } },    // Mute volume with volMod + volMuteKey
+        { volMod,                       volUpKey,  volumechange,          {.i = 1 } },      // Increase volume with volMod + volUpKey
+        { volMod,                       volDownKey,volumechange,          {.i = -1 } },    // Decrease volume with volMod + volDownKey
+        { volMod,                       volMuteKey,volumechange,          {.i=0 } },    // Mute volume with volMod + volMuteKey
         
         // Brightness keys (laptop only)
 #ifdef LAPTOP_BUILD
-        { 0,                            briUp,     spawn,          {.v = briUpCmd } },      // Increase brightness with briUp
-        { 0,                            briDown,   spawn,          {.v = briDownCmd } },    // Decrease brightness with briDown
+        { 0,                            briUp,brightnesschange,          {.i = 1 } },      // Increase brightness with briUp
+        { 0,                            briDown,   brightnesschange,          {.i=-1 } },    // Decrease brightness with briDown
 #endif
 
 	{ MODKEY|ShiftMask,             XK_e,      quit,           {0} },                   // Quit dwm with MODKEY + Shift + e
