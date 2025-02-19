@@ -9,7 +9,7 @@
 #define FONTSIZE "12"
 
 #define GAP 6
-#define TERM "urxvt"
+#define TERM "st"
 #define BROWSER "firefox"
 #define BG_IMG_PATH "/usr/share/pixmaps/default-background.jpg"
 
