@@ -250,7 +250,9 @@ static int xerrorstart(Display *dpy, XErrorEvent *ee);
 static void xinitvisual(void);
 static void zoom(const Arg *arg);
 static void volumechange(const Arg *arg);
+#ifdef LAPTOP_BUILD
 static void brightnesschange(const Arg *arg);
+#endif
 
 static pid_t getparentprocess(pid_t p);
 static int isdescprocess(pid_t p, pid_t c);
@@ -2471,6 +2473,7 @@ static void volumechange(const Arg *arg)
         }
 }
 
+#ifdef LAPTOP_BUILD
 static void brightnesschange(const Arg *arg)
 {
         const char *amount = arg->i > 0 ? "+5" : "5-";
@@ -2480,6 +2483,7 @@ static void brightnesschange(const Arg *arg)
                 spawn(&(Arg) { .v = briCmd });
         }
 }
+#endif
 
 int
 main(int argc, char *argv[])
